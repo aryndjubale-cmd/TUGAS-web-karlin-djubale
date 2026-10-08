@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservasi Joy Salon</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f1f5;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 210px;
+            background: #35163c;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 8px;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 11px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .menu a:hover,
+        .menu .active {
+            background: #52265a;
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            padding: 35px;
+            overflow-x: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .header p {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .btn-tambah {
+            background: #35163c;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-tambah:hover {
+            background: #52265a;
+        }
+
+        /* FILTER */
+        .filter {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .filter input,
+        .filter select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            flex: 1;
+        }
+
+        /* TABLE */
+        .table-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f7f3f7;
+            color: #555;
+            padding: 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #faf7fa;
+        }
+
+        /* STATUS */
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .menunggu {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .dikonfirmasi {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .selesai {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .ditolak {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* AKSI */
+        .aksi button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        .konfirmasi {
+            color: #198754;
+        }
+
+        .tolak {
+            color: #dc3545;
+        }
+
+        .ubah {
+            color: #0d6efd;
+        }
+
+        .selesai-btn {
+            color: #198754;
+        }
+
+        .lihat {
+            color: #6c757d;
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 160px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .filter {
+                flex-direction: column;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            Joy Salon
+            <span>Management System</span>
+        </div>
+
+        <ul class="menu">
+            <li><a href="#">🏠 Dashboard</a></li>
+            <li><a href="#" class="active">📅 Reservasi</a></li>
+            <li><a href="#">💳 Transaksi</a></li>
+            <li><a href="#">💇 Treatment</a></li>
+            <li><a href="#">👤 Pelanggan</a></li>
+            <li><a href="#">👨‍💼 Karyawan</a></li>
+            <li><a href="#">📋 Pengguna</a></li>
+            <li><a href="#">📊 Laporan</a></li>
+            <li><a href="#">⚙️ Keluar</a></li>
+        </ul>
+    </aside>
+
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <div class="header">
+            <div>
+                <h1>Reservasi</h1>
+                <p>Jumat, 08 Oktober 2026 · 5 jadwal</p>
+            </div>
+
+            <button class="btn-tambah" onclick="tambahReservasi()">
+                + Tambah reservasi
+            </button>
+        </div>
+
+
+        <!-- FILTER -->
+        <div class="filter">
+            <input 
+                type="text" 
+                id="search"
+                placeholder="Cari nama pelanggan atau nomor HP..."
+                onkeyup="filterData()"
+            >
+
+            <input type="date" id="tanggal" onchange="filterData()">
+
+            <select id="statusFilter" onchange="filterData()">
+                <option value="">Semua status</option>
+                <option value="Menunggu">Menunggu</option>
+                <option value="Dikonfirmasi">Dikonfirmasi</option>
+                <option value="Selesai">Selesai</option>
+                <option value="Ditolak">Ditolak</option>
+            </select>
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="table-box">
+
+            <table id="reservasiTable">
+
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Pelanggan</th>
+                        <th>Treatment</th>
+                        <th>Jam</th>
+                        <th>Karyawan</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>RS-1043</td>
+                        <td>Dhen</td>
+                        <td>Smooting</td>
+                        <td>15.00</td>
+                        <td>Rina</td>
+                        <td>
+                            <span class="status menunggu">
+                                Menunggu
+                            </span>
+                        </td>
+                        <td class="aksi">
+                            <button class="konfirmasi"
+                                onclick="konfirmasi('Dhen')">
+                                Konfirmasi
+                            </button>
+
+                            <button class="tolak"
+                                onclick="tolak('Dhen')">
+                                Tolak
+                            </button>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>RS-1042</td>
+                        <td>Jelfia</td>
+                        <td>Potong pria</td>
+                        <td>13.00</td>
+                        <td>Rina</td>
+                        <td>
+                            <span class="status dikonfirmasi">
+                                Dikonfirmasi
+                            </span>
+                        </td>
+                        <td class="aksi">
+                            <button class="ubah"
+                                onclick="ubah('Jelfia')">
+                                Ubah
+                            </button>
+
+                            <button class="selesai-btn"
+                                onclick="selesai('Jelfia')">
+                                Selesai
+                            </button>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>RS-1041</td>
+                        <td>Geo</td>
+                        <td>Creambath + potong</td>
+                        <td>11.30</td>
+                        <td>Tika</td>
+                        <td>
+                            <span class="status selesai">
+                                Selesai
+                            </span>
+                        </td>
+                        <td class="aksi">
+                            <button class="lihat"
+                                onclick="lihat('Geo')">
+                                Lihat
+                            </button>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>RS-1040</td>
+                        <td>Agnes</td>
+                        <td>Hair spa</td>
+                        <td>10.00</td>
+                        <td>Rina</td>
+                        <td>
+                            <span class="status selesai">
+                                Selesai
+                            </span>
+                        </td>
+                        <td class="aksi">
+                            <button class="lihat"
+                                onclick="lihat('Agnes')">
+                                Lihat
+                            </button>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>RS-1039</td>
+                        <td>Cia</td>
+                        <td>Facial dasar</td>
+                        <td>16.30</td>
+                        <td>-</td>
+                        <td>
+                            <span class="status ditolak">
+                                Ditolak
+                            </span>
+                        </td>
+                        <td class="aksi">
+                            <button class="lihat"
+                                onclick="lihat('Cia')">
+                                Lihat
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function konfirmasi(nama) {
+        alert("Reservasi " + nama + " berhasil dikonfirmasi!");
+    }
+
+    function tolak(nama) {
+        alert("Reservasi " + nama + " ditolak!");
+    }
+
+    function ubah(nama) {
+        alert("Mengubah data reservasi " + nama);
+    }
+
+    function selesai(nama) {
+        alert("Reservasi " + nama + " telah selesai!");
+    }
+
+    function lihat(nama) {
+        alert("Melihat detail reservasi " + nama);
+    }
+
+    function tambahReservasi() {
+        alert("Form tambah reservasi akan dibuka.");
+    }
+
+
+    function filterData() {
+
+        let search =
+            document.getElementById("search")
+            .value.toLowerCase();
+
+        let status =
+            document.getElementById("statusFilter")
+            .value;
+
+        let rows =
+            document.querySelectorAll("#reservasiTable tbody tr");
+
+        rows.forEach(function(row) {
+
+            let nama =
+                row.cells[1].textContent.toLowerCase();
+
+            let statusText =
+                row.cells[5].textContent.trim();
+
+            let cocokNama =
+                nama.includes(search);
+
+            let cocokStatus =
+                status === "" ||
+                statusText === status;
+
+            if (cocokNama && cocokStatus) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+
+        });
+    }
+
+</script>
+
+</body>
+</html>
